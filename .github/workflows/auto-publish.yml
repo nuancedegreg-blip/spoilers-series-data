@@ -19,10 +19,10 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies (FIX TOTAL)
+      - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install openai
+          python3 -m pip install -r requirements.txt
 
       - name: Run script
         env:
