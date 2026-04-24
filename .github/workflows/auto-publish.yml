@@ -23,29 +23,33 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Install dependencies
+        run: pip install requests
+
       - name: Discover potential sources
-        working-directory: ${{ github.workspace }}
-        run: |
-          python3 discover_sources.py
+        run: python3 discover_sources.py
 
       - name: Generate spoilers from allowed sources
-        working-directory: ${{ github.workspace }}
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: gpt-4.1-mini
           MAX_SPOILERS_PER_DAY: "3"
           SOURCE_ITEM_LIMIT: "3"
-        run: |
-          python3 generate_spoilers.py
+        run: python3 generate_spoilers.py
 
-      - name: Publish if spoilers changed
-        working-directory: ${{ github.workspace }}
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_MODEL: gpt-4.1-mini
-          MAX_SPOILERS_PER_DAY: "3"
-          SOURCE_ITEM_LIMIT: "3"
-          SKIP_PIPELINE_STEPS: "1"
+      - name: Commit and push if changed
         run: |
-          chmod +x ./publish.sh
-          ./publish.sh
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+
+          git pull --rebase origin main
+
+          git add .
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto update spoilers"
+            git pull --rebase origin main
+            git push origin main
+          fi
