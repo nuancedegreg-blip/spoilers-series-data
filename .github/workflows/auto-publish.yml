@@ -19,18 +19,16 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install deps (FIX)
-        run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install feedparser requests openai
+      - name: Install OpenAI
+        run: python3 -m pip install openai
 
-      - name: Run script
+      - name: Generate spoilers
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: |
-          python3 generate_spoilers.py
+          OPENAI_MODEL: gpt-4.1-mini
+        run: python3 generate_spoilers.py
 
-      - name: Commit & push
+      - name: Commit and push
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
