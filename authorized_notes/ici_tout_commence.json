@@ -1,0 +1,26 @@
+{
+  "items": [
+    {
+      "date": "2026-04-24",
+      "series_id": "ici_tout_commence",
+      "category": "Spoiler",
+      "internal_link": "note://ici_tout_commence/demo-1",
+      "facts": [
+        "Demonstration: une decision importante prise a l'institut cree des tensions immediates.",
+        "Demonstration: deux eleves s'opposent ouvertement sur la facon de gerer un conflit recent.",
+        "Demonstration: une consequence directe est attendue des le prochain episode."
+      ]
+    },
+    {
+      "date": "2026-04-25",
+      "series_id": "ici_tout_commence",
+      "category": "Spoiler",
+      "internal_link": "note://ici_tout_commence/demo-2",
+      "facts": [
+        "Demonstration: une accusation met un personnage sous pression devant le reste du groupe.",
+        "Demonstration: une alliance inattendue se forme pour eviter une escalation.",
+        "Demonstration: un nouvel obstacle complique encore la situation."
+      ]
+    }
+  ]
+}

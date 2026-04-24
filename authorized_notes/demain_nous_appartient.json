@@ -4,11 +4,22 @@
       "date": "2026-04-24",
       "series_id": "demain_nous_appartient",
       "category": "Spoiler",
-      "internal_link": "note://demain_nous_appartient/exemple-1",
+      "internal_link": "note://demain_nous_appartient/demo-1",
       "facts": [
-        "Une revelation vient fragiliser un personnage central.",
-        "Une confrontation est attendue dans le prochain episode.",
-        "La situation se termine sur une tension non resolue."
+        "Demonstration: un secret ancien refait surface dans une famille deja fragilisee.",
+        "Demonstration: une confrontation directe eclate entre deux proches a cause d'un mensonge cache.",
+        "Demonstration: la fin d'episode laisse planer une menace sur un personnage central."
+      ]
+    },
+    {
+      "date": "2026-04-25",
+      "series_id": "demain_nous_appartient",
+      "category": "Spoiler",
+      "internal_link": "note://demain_nous_appartient/demo-2",
+      "facts": [
+        "Demonstration: un personnage commence a relier plusieurs indices inquietants.",
+        "Demonstration: une decision prise dans l'urgence provoque une nouvelle tension collective.",
+        "Demonstration: un doute important subsiste au moment du generique final."
       ]
     }
   ]

@@ -1,0 +1,26 @@
+{
+  "items": [
+    {
+      "date": "2026-04-24",
+      "series_id": "plus_belle_la_vie",
+      "category": "Spoiler",
+      "internal_link": "note://plus_belle_la_vie/demo-1",
+      "facts": [
+        "Demonstration: un retour inattendu relance une intrigue deja sensible dans le quartier.",
+        "Demonstration: un personnage cherche a obtenir des reponses avant qu'une situation n'empire.",
+        "Demonstration: une information de fin de sequence relance un nouveau doute."
+      ]
+    },
+    {
+      "date": "2026-04-25",
+      "series_id": "plus_belle_la_vie",
+      "category": "Spoiler",
+      "internal_link": "note://plus_belle_la_vie/demo-2",
+      "facts": [
+        "Demonstration: une discussion apparemment calme prend une tournure beaucoup plus tendue.",
+        "Demonstration: une initiative prise en secret risque d'avoir des consequences rapides.",
+        "Demonstration: plusieurs personnages se retrouvent indirectement impliques."
+      ]
+    }
+  ]
+}

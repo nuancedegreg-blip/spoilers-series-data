@@ -1,0 +1,26 @@
+{
+  "items": [
+    {
+      "date": "2026-04-24",
+      "series_id": "un_si_grand_soleil",
+      "category": "Spoiler",
+      "internal_link": "note://un_si_grand_soleil/demo-1",
+      "facts": [
+        "Demonstration: une information nouvelle remet en question un equilibre installe.",
+        "Demonstration: un personnage decide d'affronter directement une situation delicate.",
+        "Demonstration: un suspense important est conserve pour l'episode suivant."
+      ]
+    },
+    {
+      "date": "2026-04-25",
+      "series_id": "un_si_grand_soleil",
+      "category": "Spoiler",
+      "internal_link": "note://un_si_grand_soleil/demo-2",
+      "facts": [
+        "Demonstration: une piste inattendue attire l'attention sur un detail jusque-la neglige.",
+        "Demonstration: une tension monte entre deux personnages qui n'ont plus les memes objectifs.",
+        "Demonstration: la derniere scene ouvre la voie a une nouvelle complication."
+      ]
+    }
+  ]
+}
