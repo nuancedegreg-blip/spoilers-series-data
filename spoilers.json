@@ -26,5 +26,19 @@
       "image": ""
     }
   ],
-  "spoilers": []
+  "spoilers": [
+    {
+      "id": "auto-2026-04-24-bf82e268eca02c72",
+      "series_id": "demain_nous_appartient",
+      "title": "Une nouvelle tension pourrait tout changer",
+      "content": "Dans Demain nous appartient, une nouvelle théorie de fan imagine que la situation pourrait rapidement se compliquer. Une tension familiale pourrait créer un nouveau conflit. Un personnage semble cacher une information importante. Une décision inattendue pourrait changer l’équilibre du groupe. Ce contenu est une hypothèse non officielle générée à partir de notes internes, et ne doit pas être présenté comme une information confirmée.",
+      "short_summary": "Dans Demain nous appartient, une nouvelle théorie de fan imagine que la situation pourrait rapidement se compliquer. Une tension familiale p...",
+      "notification_text": "Une nouvelle tension pourrait tout changer",
+      "date": "2026-04-24",
+      "category": "Théorie",
+      "spoiler_level": "soft",
+      "source": "internal_ai",
+      "is_official": false
+    }
+  ]
 }
