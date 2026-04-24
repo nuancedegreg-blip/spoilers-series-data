@@ -1,0 +1,21 @@
+{
+  "lastUpdate": "2026-04-24",
+  "series": [
+    {
+      "id": "dna",
+      "title": "Demain nous appartient",
+      "description": "Résumés, actus et théories autour de la série.",
+      "image": ""
+    }
+  ],
+  "spoilers": [
+    {
+      "id": "1",
+      "series_id": "dna",
+      "title": "Un secret éclate",
+      "content": "Un personnage cache quelque chose qui pourrait tout changer.",
+      "date": "2026-04-24",
+      "category": "Spoiler"
+    }
+  ]
+}
