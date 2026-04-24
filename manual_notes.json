@@ -3,10 +3,49 @@
     {
       "series_id": "demain_nous_appartient",
       "facts": [
-        "Une tension familiale pourrait créer un nouveau conflit.",
-        "Un personnage semble cacher une information importante.",
-        "Une décision inattendue pourrait changer l’équilibre du groupe."
+        "secret",
+        "tension familiale",
+        "dispute",
+        "choix inattendu"
       ],
+      "characters": ["Chloé", "Alex", "Sara", "Bart"],
+      "themes": ["famille", "secret", "danger"],
+      "category": "Théorie"
+    },
+    {
+      "series_id": "ici_tout_commence",
+      "facts": [
+        "rivalité",
+        "pression au sein de l’institut",
+        "relation compliquée",
+        "décision qui divise"
+      ],
+      "characters": ["Teyssier", "Anaïs", "Hortense", "Clotilde"],
+      "themes": ["amour", "ambition", "trahison"],
+      "category": "Théorie"
+    },
+    {
+      "series_id": "plus_belle_la_vie",
+      "facts": [
+        "retour inattendu",
+        "mystère",
+        "conflit de quartier",
+        "ancienne histoire qui ressurgit"
+      ],
+      "characters": ["Thomas", "Ariane", "Barbara", "Boher"],
+      "themes": ["mystère", "famille", "passé"],
+      "category": "Théorie"
+    },
+    {
+      "series_id": "un_si_grand_soleil",
+      "facts": [
+        "enquête",
+        "soupçon",
+        "mensonge",
+        "relation sous tension"
+      ],
+      "characters": ["Claire", "Élisabeth", "Manu", "Johanna"],
+      "themes": ["policier", "mensonge", "couple"],
       "category": "Théorie"
     }
   ]
