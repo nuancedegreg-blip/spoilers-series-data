@@ -4,7 +4,7 @@
       "name": "Notes internes",
       "url": "manual_notes.json",
       "source_type": "manual_notes",
-      "related_series_id": "demain_nous_appartient",
+      "related_series_id": "all",
       "legal_status": "allowed",
       "confidence_score": 1,
       "reason": "Source interne contrôlée"
