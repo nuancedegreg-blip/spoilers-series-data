@@ -2,7 +2,7 @@ name: Auto Publish Spoilers
 
 on:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: "0 */3 * * *"
   workflow_dispatch:
 
 permissions:
@@ -28,7 +28,13 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Generate spoilers
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate spoilers from RSS
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-4.1-mini
         run: python3 generate_spoilers.py
 
       - name: Commit and push if changed
