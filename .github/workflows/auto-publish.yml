@@ -21,25 +21,21 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies (FIX FINAL)
+      - name: Install OpenAI
         run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install openai
+          python -m pip install --upgrade pip
+          python -m pip install openai
+          python -c "import openai; print('openai OK')"
 
-      - name: Verify install
-        run: |
-          python3 -c "import openai; print('OK openai installé')"
-
-      - name: Run script
+      - name: Run generator
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: python3 generate_spoilers.py
+        run: python generate_spoilers.py
 
-      - name: Commit & push
+      - name: Commit and push
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-
           git add .
 
           if git diff --cached --quiet; then
