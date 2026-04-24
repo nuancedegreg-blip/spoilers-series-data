@@ -219,14 +219,18 @@ struct ContentView: View {
                     )
             }
 
-            if let lastUpdate = viewModel.lastUpdate {
-                Label(
-                    "Mis à jour \(lastUpdate.formatted(date: .abbreviated, time: .shortened))",
-                    systemImage: "clock"
-                )
-                .font(.footnote.weight(.medium))
-                .foregroundStyle(.secondary)
+            Group {
+                if let lastUpdate = viewModel.lastUpdate {
+                    Label(
+                        "Mis à jour \(lastUpdate.formatted(date: .abbreviated, time: .shortened))",
+                        systemImage: "clock"
+                    )
+                } else {
+                    Label("Aucune mise à jour enregistrée", systemImage: "clock.badge.questionmark")
+                }
             }
+            .font(.footnote.weight(.medium))
+            .foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(20)
@@ -274,27 +278,27 @@ struct ContentView: View {
         }
     }
 
-    private func series(for id: Int) -> Series? {
+    private func series(for id: String) -> Series? {
         viewModel.spoilersData.series.first { $0.id == id }
     }
 
-    private func spoilers(for seriesID: Int) -> [Spoiler] {
+    private func spoilers(for seriesID: String) -> [Spoiler] {
         viewModel.spoilersData.spoilers.filter { $0.seriesID == seriesID }
     }
 
     private func spoilerDate(for spoiler: Spoiler) -> Date? {
-        spoiler.date.flatMap { SpoilerDateFormatter.shared.date(from: $0) }
+        SpoilerDateFormatter.shared.date(from: spoiler.date)
     }
 
-    private func isFavorite(_ seriesID: Int) -> Bool {
+    private func isFavorite(_ seriesID: String) -> Bool {
         favoriteIDSet.contains(seriesID)
     }
 
-    private var favoriteIDSet: Set<Int> {
+    private var favoriteIDSet: Set<String> {
         Set(
             favoriteSeriesIDs
                 .split(separator: ",")
-                .compactMap { Int($0) }
+                .map(String.init)
         )
     }
 }
@@ -363,11 +367,11 @@ struct SeriesDetailView: View {
         favoriteIDSet.contains(series.id)
     }
 
-    private var favoriteIDSet: Set<Int> {
+    private var favoriteIDSet: Set<String> {
         Set(
             favoriteSeriesIDs
                 .split(separator: ",")
-                .compactMap { Int($0) }
+                .map(String.init)
         )
     }
 
@@ -382,7 +386,6 @@ struct SeriesDetailView: View {
 
         favoriteSeriesIDs = updatedFavorites
             .sorted()
-            .map(String.init)
             .joined(separator: ",")
     }
 }
@@ -413,6 +416,11 @@ private struct SeriesCardView: View {
                 Text(series.title)
                     .font(.headline)
                     .foregroundStyle(.primary)
+
+                Text(series.description)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(2)
 
                 HStack(spacing: 8) {
                     SpoilerBadge()
@@ -471,7 +479,7 @@ private struct SpoilerCardView: View {
 
                 Spacer()
 
-                SpoilerBadge()
+                SpoilerBadge(title: spoiler.category)
             }
 
             Text(spoiler.content)
@@ -494,8 +502,14 @@ private struct SpoilerCardView: View {
 }
 
 private struct SpoilerBadge: View {
+    let title: String
+
+    init(title: String = "Spoiler") {
+        self.title = title
+    }
+
     var body: some View {
-        Text("Spoiler")
+        Text(title)
             .font(.caption.bold())
             .foregroundStyle(.white)
             .padding(.horizontal, 10)
@@ -635,15 +649,22 @@ private enum SpoilerDateFormatter {
         formatter.locale = Locale(identifier: "fr_FR")
         return formatter
     }()
+
+    static let display: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        formatter.locale = Locale(identifier: "fr_FR")
+        return formatter
+    }()
 }
 
 private extension Spoiler {
     var formattedDate: String? {
-        guard let date,
-              let parsedDate = SpoilerDateFormatter.shared.date(from: date) else {
+        guard let parsedDate = SpoilerDateFormatter.shared.date(from: date) else {
             return nil
         }
 
-        return parsedDate.formatted(date: .abbreviated, time: .omitted)
+        return SpoilerDateFormatter.display.string(from: parsedDate)
     }
 }

@@ -1,0 +1,57 @@
+{
+  "lastUpdate": "2026-04-24",
+  "series": [
+    {
+      "id": "dna",
+      "title": "Demain nous appartient",
+      "description": "Résumés, actus et théories autour de la série.",
+      "image": ""
+    },
+    {
+      "id": "itc",
+      "title": "Ici tout commence",
+      "description": "Toutes les intrigues autour de l'institut et de ses personnages.",
+      "image": ""
+    },
+    {
+      "id": "usgs",
+      "title": "Un si grand soleil",
+      "description": "Spoilers et résumés originaux autour des prochains épisodes.",
+      "image": ""
+    }
+  ],
+  "spoilers": [
+    {
+      "id": "1",
+      "title": "Un secret éclate",
+      "content": "Un personnage cache quelque chose...",
+      "series_id": "dna",
+      "date": "2026-04-24",
+      "category": "Spoiler"
+    },
+    {
+      "id": "2",
+      "title": "Une tension monte",
+      "content": "Une dispute change l'équilibre du groupe.",
+      "series_id": "dna",
+      "date": "2026-04-25",
+      "category": "Spoiler"
+    },
+    {
+      "id": "3",
+      "title": "Une décision surprend",
+      "content": "Un choix inattendu bouleverse l'intrigue.",
+      "series_id": "itc",
+      "date": "2026-04-26",
+      "category": "Spoiler"
+    },
+    {
+      "id": "4",
+      "title": "Un retour relance tout",
+      "content": "Un visage connu revient dans l'histoire.",
+      "series_id": "usgs",
+      "date": "2026-04-27",
+      "category": "Spoiler"
+    }
+  ]
+}
