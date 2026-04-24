@@ -20,7 +20,7 @@ import xml.etree.ElementTree as ET
 
 ROOT_DIR = Path(__file__).resolve().parent
 SOURCES_PATH = ROOT_DIR / "sources.json"
-INTERNAL_LOG_PATH = ROOT_DIR / ".internal_sources.json"
+INTERNAL_LOG_PATH = ROOT_DIR / "internal_sources.json"
 OPENAI_API_URL = "https://api.openai.com/v1/responses"
 DEFAULT_MODEL = os.environ.get("OPENAI_MODEL", "gpt-4.1-mini")
 DEFAULT_MAX_PER_DAY = int(os.environ.get("MAX_SPOILERS_PER_DAY", "3"))

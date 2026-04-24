@@ -23,7 +23,12 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Run automatic publish
+      - name: Discover potential sources
+        working-directory: ${{ github.workspace }}
+        run: |
+          python3 discover_sources.py
+
+      - name: Generate spoilers from allowed sources
         working-directory: ${{ github.workspace }}
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -31,7 +36,16 @@ jobs:
           MAX_SPOILERS_PER_DAY: "3"
           SOURCE_ITEM_LIMIT: "3"
         run: |
-          pwd
-          ls -la
+          python3 generate_spoilers.py
+
+      - name: Publish if spoilers changed
+        working-directory: ${{ github.workspace }}
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-4.1-mini
+          MAX_SPOILERS_PER_DAY: "3"
+          SOURCE_ITEM_LIMIT: "3"
+          SKIP_PIPELINE_STEPS: "1"
+        run: |
           chmod +x ./publish.sh
           ./publish.sh

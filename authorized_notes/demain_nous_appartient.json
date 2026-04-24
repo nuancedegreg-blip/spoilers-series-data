@@ -1,0 +1,15 @@
+{
+  "items": [
+    {
+      "date": "2026-04-24",
+      "series_id": "demain_nous_appartient",
+      "category": "Spoiler",
+      "internal_link": "note://demain_nous_appartient/exemple-1",
+      "facts": [
+        "Une revelation vient fragiliser un personnage central.",
+        "Une confrontation est attendue dans le prochain episode.",
+        "La situation se termine sur une tension non resolue."
+      ]
+    }
+  ]
+}
