@@ -1,4 +1,31 @@
-{
-  "discovered_at": "",
-  "items": []
-}
+import json
+from datetime import datetime
+from pathlib import Path
+
+DISCOVERED_FILE = Path("discovered_sources.json")
+
+POTENTIAL_SOURCES = [
+    {
+        "name": "Source officielle à vérifier",
+        "url": "https://example.com/rss",
+        "source_type": "rss",
+        "related_series_id": "demain_nous_appartient",
+        "legal_status": "unknown",
+        "confidence_score": 0.3,
+        "reason": "Découverte automatique. Validation nécessaire avant utilisation."
+    }
+]
+
+def save_json(path, data):
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+
+def main():
+    data = {
+        "last_discovery": datetime.utcnow().strftime("%Y-%m-%d"),
+        "sources": POTENTIAL_SOURCES
+    }
+    save_json(DISCOVERED_FILE, data)
+    print("Discovery completed. Unknown sources saved, not used for publishing.")
+
+if __name__ == "__main__":
+    main()
