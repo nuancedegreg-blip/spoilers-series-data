@@ -28,9 +28,6 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Discover potential sources
-        run: python3 discover_sources.py
-
       - name: Generate spoilers
         run: python3 generate_spoilers.py
 
