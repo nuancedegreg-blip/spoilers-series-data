@@ -19,16 +19,17 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install OpenAI
-        run: python3 -m pip install openai
+      - name: Install dependencies (FIX TOTAL)
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install openai
 
-      - name: Generate spoilers
+      - name: Run script
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_MODEL: gpt-4.1-mini
         run: python3 generate_spoilers.py
 
-      - name: Commit and push
+      - name: Commit & push
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
