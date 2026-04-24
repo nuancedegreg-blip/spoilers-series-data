@@ -2,10 +2,11 @@ import json
 import os
 import re
 import hashlib
+import urllib.request
+import xml.etree.ElementTree as ET
 from datetime import datetime
 from pathlib import Path
 
-import feedparser
 from openai import OpenAI
 
 SPOILERS_FILE = Path("spoilers.json")
@@ -44,6 +45,14 @@ def clean(text):
 def make_hash(text):
     return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
 
+def fetch_rss(url):
+    req = urllib.request.Request(
+        url,
+        headers={"User-Agent": "SpoilersSeriesFR/1.0"}
+    )
+    with urllib.request.urlopen(req, timeout=20) as response:
+        return response.read()
+
 def collect_rss_items():
     sources = load_json(SOURCES_FILE, {"sources": []}).get("sources", [])
     items = []
@@ -54,12 +63,19 @@ def collect_rss_items():
         if source.get("source_type") != "rss":
             continue
 
-        feed = feedparser.parse(source["url"])
+        try:
+            raw = fetch_rss(source["url"])
+            root = ET.fromstring(raw)
+        except Exception as e:
+            print(f"Erreur RSS {source.get('name')}: {e}")
+            continue
 
-        for entry in feed.entries[:6]:
-            title = clean(entry.get("title", ""))
-            summary = clean(entry.get("summary", ""))
-            link = entry.get("link", source["url"])
+        rss_items = root.findall(".//item")[:6]
+
+        for entry in rss_items:
+            title = clean(entry.findtext("title", ""))
+            summary = clean(entry.findtext("description", ""))
+            link = entry.findtext("link", source["url"])
 
             if not title:
                 continue
@@ -75,6 +91,24 @@ def collect_rss_items():
 
 def ai_generate(series_title, facts):
     api_key = os.getenv("OPENAI_API_KEY")
+
+    if not api_key:
+        title = f"{series_title} : les prochains épisodes s’annoncent sous tension"
+        content = (
+            f"Les dernières tendances autour de {series_title} laissent imaginer une suite mouvementée.\n\n"
+            "Plusieurs éléments publics semblent annoncer de nouvelles tensions, mais rien n’est présenté ici comme une information officielle.\n\n"
+            "Ce contenu est une analyse originale générée à partir de faits courts issus de flux publics."
+        )
+        return {
+            "title": title,
+            "content": content,
+            "short_summary": content[:140] + "...",
+            "notification_text": title + " 👀",
+            "category": "Spoiler / Actu",
+            "spoiler_level": "probable",
+            "content_type": "rss_inspired_tv_news",
+            "is_official": False
+        }
 
     prompt = f"""
 Tu écris pour une app française de spoilers et d'actus séries.
@@ -109,24 +143,6 @@ Réponds uniquement en JSON valide :
   "is_official": false
 }}
 """
-
-    if not api_key:
-        title = f"{series_title} : les prochains épisodes s’annoncent sous tension"
-        content = (
-            f"Les dernières tendances autour de {series_title} laissent imaginer une suite mouvementée.\n\n"
-            "Plusieurs éléments publics semblent annoncer de nouvelles tensions, mais rien n’est présenté ici comme une information officielle.\n\n"
-            "Ce contenu est une analyse originale générée à partir de faits courts issus de flux publics."
-        )
-        return {
-            "title": title,
-            "content": content,
-            "short_summary": content[:140] + "...",
-            "notification_text": title + " 👀",
-            "category": "Spoiler / Actu",
-            "spoiler_level": "probable",
-            "content_type": "rss_inspired_tv_news",
-            "is_official": False
-        }
 
     client = OpenAI(api_key=api_key)
     result = client.chat.completions.create(
