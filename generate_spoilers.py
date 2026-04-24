@@ -1,12 +1,38 @@
 import json
 import hashlib
+import random
 from datetime import datetime
 from pathlib import Path
 
 SPOILERS_FILE = Path("spoilers.json")
-SOURCES_FILE = Path("sources.json")
 NOTES_FILE = Path("manual_notes.json")
+SOURCES_FILE = Path("sources.json")
 INTERNAL_FILE = Path("internal_sources.json")
+
+SERIES = [
+    {"id": "demain_nous_appartient", "title": "Demain nous appartient", "description": "Feuilleton quotidien français", "image": ""},
+    {"id": "ici_tout_commence", "title": "Ici tout commence", "description": "Feuilleton quotidien français", "image": ""},
+    {"id": "plus_belle_la_vie", "title": "Plus belle la vie", "description": "Feuilleton quotidien français", "image": ""},
+    {"id": "un_si_grand_soleil", "title": "Un si grand soleil", "description": "Feuilleton quotidien français", "image": ""}
+]
+
+TITLES = [
+    "{character} pourrait être au cœur d’un nouveau bouleversement",
+    "Un secret autour de {character} pourrait tout changer",
+    "Une tension inattendue pourrait éclater dans {series}",
+    "{character} pourrait cacher quelque chose d’important",
+    "Un retournement de situation semble se préparer"
+]
+
+ANGLES = [
+    "Plusieurs indices laissent penser que la situation pourrait rapidement se compliquer.",
+    "Une nouvelle hypothèse de fan imagine un tournant important dans les prochains épisodes.",
+    "Le climat semble de plus en plus tendu, et certains détails pourraient prendre une importance inattendue.",
+    "Une intrigue pourrait basculer si certains secrets venaient à être révélés."
+]
+
+def today():
+    return datetime.utcnow().strftime("%Y-%m-%d")
 
 def load_json(path, default):
     if not path.exists():
@@ -19,18 +45,22 @@ def save_json(path, data):
 def make_hash(text):
     return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
 
-def today():
-    return datetime.utcnow().strftime("%Y-%m-%d")
+def build_spoiler(series_title, note):
+    character = random.choice(note.get("characters", ["un personnage"]))
+    facts = note.get("facts", [])
+    themes = note.get("themes", [])
 
-def build_content(series_title, facts):
-    facts_text = " ".join(facts)
-    title = "Une nouvelle tension pourrait tout changer"
+    title = random.choice(TITLES).format(character=character, series=series_title)
+    angle = random.choice(ANGLES)
+
+    selected_facts = ", ".join(random.sample(facts, min(len(facts), 3)))
+    selected_themes = ", ".join(random.sample(themes, min(len(themes), 2)))
 
     content = (
-        f"Dans {series_title}, une nouvelle théorie de fan imagine que la situation pourrait "
-        f"rapidement se compliquer. {facts_text} "
-        "Ce contenu est une hypothèse non officielle générée à partir de notes internes, "
-        "et ne doit pas être présenté comme une information confirmée."
+        f"Dans {series_title}, {angle} "
+        f"Autour de {character}, plusieurs éléments évoquent {selected_facts}. "
+        f"L’intrigue pourrait prendre une direction plus intense, notamment autour des thèmes : {selected_themes}. "
+        "Ce contenu est une théorie non officielle générée à partir d’indices généraux et ne doit pas être présenté comme une information confirmée."
     )
 
     return title, content
@@ -38,116 +68,86 @@ def build_content(series_title, facts):
 def main():
     data = load_json(SPOILERS_FILE, {
         "lastUpdate": "",
-        "series": [
-            {
-                "id": "demain_nous_appartient",
-                "title": "Demain nous appartient",
-                "description": "Feuilleton quotidien français",
-                "image": ""
-            },
-            {
-                "id": "ici_tout_commence",
-                "title": "Ici tout commence",
-                "description": "Feuilleton quotidien français",
-                "image": ""
-            },
-            {
-                "id": "plus_belle_la_vie",
-                "title": "Plus belle la vie",
-                "description": "Feuilleton quotidien français",
-                "image": ""
-            },
-            {
-                "id": "un_si_grand_soleil",
-                "title": "Un si grand soleil",
-                "description": "Feuilleton quotidien français",
-                "image": ""
-            }
-        ],
+        "series": SERIES,
         "spoilers": []
     })
 
-    notes_data = load_json(NOTES_FILE, {"notes": []})
-    sources_data = load_json(SOURCES_FILE, {"sources": []})
-    internal_log = load_json(INTERNAL_FILE, {"items": []})
+    if not data.get("series"):
+        data["series"] = SERIES
 
-    allowed_sources = [
-        s for s in sources_data.get("sources", [])
-        if s.get("legal_status") == "allowed"
-    ]
+    sources = load_json(SOURCES_FILE, {"sources": []})
+    allowed_sources = [s for s in sources.get("sources", []) if s.get("legal_status") == "allowed"]
 
     if not allowed_sources:
-        print("No allowed sources. Nothing published.")
+        print("No allowed source. Nothing published.")
         return
 
-    existing_hashes = {item.get("hash") for item in internal_log.get("items", [])}
-    existing_today = [
-        s for s in data.get("spoilers", [])
-        if s.get("date") == today()
-    ]
+    notes = load_json(NOTES_FILE, {"notes": []})
+    internal = load_json(INTERNAL_FILE, {"items": []})
 
-    if len(existing_today) >= 3:
-        print("Daily limit reached. Nothing published.")
+    existing_hashes = {i.get("hash") for i in internal.get("items", [])}
+    today_spoilers = [s for s in data.get("spoilers", []) if s.get("date") == today()]
+
+    if len(today_spoilers) >= 3:
+        print("Daily limit reached.")
         return
 
-    series_map = {s["id"]: s for s in data.get("series", [])}
+    series_map = {s["id"]: s for s in data["series"]}
 
-    for note in notes_data.get("notes", []):
+    random.shuffle(notes["notes"])
+
+    for note in notes.get("notes", []):
         series_id = note.get("series_id")
-        facts = note.get("facts", [])
-        category = note.get("category", "Théorie")
-
-        if not series_id or not facts:
+        if series_id not in series_map:
             continue
 
-        facts_text = " | ".join(facts)
-        content_hash = make_hash(series_id + facts_text)
+        hash_text = series_id + json.dumps(note, ensure_ascii=False) + today()
+        content_hash = make_hash(hash_text)
 
         if content_hash in existing_hashes:
-            print("Duplicate content skipped.")
             continue
 
-        series = series_map.get(series_id)
-        if not series:
-            print(f"Unknown series skipped: {series_id}")
-            continue
+        series_title = series_map[series_id]["title"]
+        title, content = build_spoiler(series_title, note)
 
-        title, content = build_content(series["title"], facts)
-
-        new_spoiler = {
+        spoiler = {
             "id": f"auto-{today()}-{content_hash}",
             "series_id": series_id,
             "title": title,
             "content": content,
             "short_summary": content[:140] + "...",
-            "notification_text": title,
+            "notification_text": title + " 👀",
             "date": today(),
-            "category": category,
-            "spoiler_level": "soft",
-            "source": "internal_ai",
-            "is_official": False
+            "category": note.get("category", "Théorie"),
+            "spoiler_level": "probable",
+            "source": "ai_from_allowed_sources",
+            "is_official": False,
+            "content_type": "ultra_realistic_theory",
+            "image_url": "",
+            "video_url": "",
+            "media_source": "none",
+            "media_credit": "",
+            "source_urls": []
         }
 
-        data.setdefault("spoilers", []).insert(0, new_spoiler)
+        data["spoilers"].insert(0, spoiler)
         data["lastUpdate"] = today()
 
-        internal_log.setdefault("items", []).append({
+        internal.setdefault("items", []).append({
             "date": today(),
             "hash": content_hash,
             "series_id": series_id,
-            "facts": facts,
-            "source": "manual_notes",
             "published": True,
-            "reason": "Generated from allowed internal notes"
+            "reason": "Ultra realistic theory generated from allowed internal notes"
         })
 
         save_json(SPOILERS_FILE, data)
-        save_json(INTERNAL_FILE, internal_log)
+        save_json(INTERNAL_FILE, internal)
 
-        print("New spoiler generated.")
+        print("Ultra realistic spoiler generated.")
         return
 
-    print("No usable notes found. Nothing published.")
+    print("No new spoiler generated.")
 
 if __name__ == "__main__":
     main()
