@@ -28,27 +28,16 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
-        run: pip install requests openai
-
       - name: Discover potential sources
         run: python3 discover_sources.py
 
-      - name: Generate spoilers from allowed sources
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_MODEL: gpt-4.1-mini
-          MAX_SPOILERS_PER_DAY: "3"
-          SOURCE_ITEM_LIMIT: "3"
+      - name: Generate spoilers
         run: python3 generate_spoilers.py
 
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-
-          git fetch origin main
-          git pull --rebase origin main
 
           git add .
 
@@ -58,4 +47,5 @@ jobs:
           fi
 
           git commit -m "Auto update spoilers"
+          git pull --rebase origin main
           git push origin HEAD:main
