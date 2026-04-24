@@ -1,92 +1,13 @@
 {
   "sources": [
     {
-      "id": "manual-dna",
-      "enabled": true,
-      "name": "Notes editoriales Demain nous appartient",
-      "series_id": "demain_nous_appartient",
+      "name": "Notes internes",
+      "url": "manual_notes.json",
       "source_type": "manual_notes",
+      "related_series_id": "demain_nous_appartient",
       "legal_status": "allowed",
-      "path": "authorized_notes/demain_nous_appartient.json",
-      "category": "Spoiler",
-      "notes": "Source interne. Utilisation autorisee."
-    },
-    {
-      "id": "manual-itc",
-      "enabled": true,
-      "name": "Notes editoriales Ici tout commence",
-      "series_id": "ici_tout_commence",
-      "source_type": "manual_notes",
-      "legal_status": "allowed",
-      "path": "authorized_notes/ici_tout_commence.json",
-      "category": "Spoiler",
-      "notes": "Source interne. Utilisation autorisee."
-    },
-    {
-      "id": "manual-pblv",
-      "enabled": true,
-      "name": "Notes editoriales Plus belle la vie",
-      "series_id": "plus_belle_la_vie",
-      "source_type": "manual_notes",
-      "legal_status": "allowed",
-      "path": "authorized_notes/plus_belle_la_vie.json",
-      "category": "Spoiler",
-      "notes": "Source interne. Utilisation autorisee."
-    },
-    {
-      "id": "manual-usgs",
-      "enabled": true,
-      "name": "Notes editoriales Un si grand soleil",
-      "series_id": "un_si_grand_soleil",
-      "source_type": "manual_notes",
-      "legal_status": "allowed",
-      "path": "authorized_notes/un_si_grand_soleil.json",
-      "category": "Spoiler",
-      "notes": "Source interne. Utilisation autorisee."
-    },
-    {
-      "id": "tf1-group-press-dna",
-      "enabled": false,
-      "name": "Groupe TF1 Presse - Demain nous appartient",
-      "series_id": "demain_nous_appartient",
-      "source_type": "public_press_release",
-      "legal_status": "unknown",
-      "url": "https://groupe-tf1.fr/fr/presse",
-      "category": "Spoiler",
-      "notes": "Salle de presse officielle publique, mais conditions de reprise insuffisamment explicites pour automatisation."
-    },
-    {
-      "id": "tf1-group-press-itc",
-      "enabled": false,
-      "name": "Groupe TF1 Presse - Ici tout commence",
-      "series_id": "ici_tout_commence",
-      "source_type": "public_press_release",
-      "legal_status": "unknown",
-      "url": "https://groupe-tf1.fr/fr/presse",
-      "category": "Spoiler",
-      "notes": "Salle de presse officielle publique, mais conditions de reprise insuffisamment explicites pour automatisation."
-    },
-    {
-      "id": "tf1-group-press-pblv",
-      "enabled": false,
-      "name": "Groupe TF1 Presse - Plus belle la vie",
-      "series_id": "plus_belle_la_vie",
-      "source_type": "public_press_release",
-      "legal_status": "unknown",
-      "url": "https://groupe-tf1.fr/fr/presse",
-      "category": "Spoiler",
-      "notes": "Salle de presse officielle publique, mais conditions de reprise insuffisamment explicites pour automatisation."
-    },
-    {
-      "id": "francetv-sites-usgs",
-      "enabled": false,
-      "name": "France Televisions - sites et applications",
-      "series_id": "un_si_grand_soleil",
-      "source_type": "rss",
-      "legal_status": "forbidden",
-      "url": "https://www.france.tv/confidentialite/cgu/",
-      "category": "Spoiler",
-      "notes": "Conditions d'utilisation France Televisions avec reservation TDM et restrictions de reutilisation. Source refusee automatiquement."
+      "confidence_score": 1,
+      "reason": "Source interne contrôlée"
     }
   ]
 }
