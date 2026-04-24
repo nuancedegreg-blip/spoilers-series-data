@@ -2,20 +2,29 @@
   "lastUpdate": "2026-04-24",
   "series": [
     {
-      "id": "dna",
+      "id": "demain_nous_appartient",
       "title": "Demain nous appartient",
-      "description": "Résumés, actus et théories autour de la série.",
+      "description": "Feuilleton quotidien français",
+      "image": ""
+    },
+    {
+      "id": "ici_tout_commence",
+      "title": "Ici tout commence",
+      "description": "Feuilleton quotidien français",
+      "image": ""
+    },
+    {
+      "id": "plus_belle_la_vie",
+      "title": "Plus belle la vie",
+      "description": "Feuilleton quotidien français",
+      "image": ""
+    },
+    {
+      "id": "un_si_grand_soleil",
+      "title": "Un si grand soleil",
+      "description": "Feuilleton quotidien français",
       "image": ""
     }
   ],
-  "spoilers": [
-    {
-      "id": "1",
-      "series_id": "dna",
-      "title": "Un secret éclate",
-      "content": "Un personnage cache quelque chose qui pourrait tout changer.",
-      "date": "2026-04-24",
-      "category": "Spoiler"
-    }
-  ]
+  "spoilers": []
 }
